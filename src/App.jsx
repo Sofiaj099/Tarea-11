@@ -9,7 +9,7 @@ import Favoritos from './componentes/favoritos'
 import Aleatorio from './componentes/aleatorios'
 import Capturado from './componentes/capturados'  
 import Usuarios from './componentes/usuarios'
-import Pokemon from './componentes/pokemon'
+import universities from './componentes/universities'
 import Aleatorios from './componentes/aleatorios';
 import Capturados from './componentes/capturados';
 import Menu from './componentes/Menu';
@@ -26,7 +26,7 @@ function App() {
       <Route path= "/Aleatorios" element={<Aleatorios/>}/>
       <Route path= "/Capturados" element={<Capturados/>}/>
       <Route path= "/Usuarios" element={<Usuarios/>}/>
-      <Route path= "/Pokemon" element={<Pokemon/>}/>
+      <Route path= "/Hola" element={<Pokemon/>}/>
       </Routes>
     </Router>
   )

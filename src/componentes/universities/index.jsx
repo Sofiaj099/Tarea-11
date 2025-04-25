@@ -7,7 +7,7 @@ function Pokemon() {
 
   return (
     <>
-    <h1>Pokemon</h1>
+    <h1>jjj</h1>
 
     </>
   )
