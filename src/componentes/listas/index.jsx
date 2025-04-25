@@ -5,7 +5,7 @@ const UniversityList = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('https://api.hipolab.com/universities') // ← Aquí va tu endpoint real
+    fetch('http://universities.hipolabs.com')
       .then(response => response.json())
       .then(data => {
         setUniversities(data);
