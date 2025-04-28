@@ -29,4 +29,3 @@ function Filtro({ onTipoChange }) {
 }
 
 export default Filtro;
-
