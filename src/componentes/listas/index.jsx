@@ -1,75 +1,71 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
+import './style.css';
+import Filtro from '../Filtro';
 
 function Lista() {
-  const [emojis, setEmojis] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [emojiSeleccionado, setEmojiSeleccionado] = useState(null);
+  const [data, setData] = useState([]);  // Guardamos los emojis
+  const navigate = useNavigate();
+  const [busqueda, setBusqueda] = useState('');  // Para la búsqueda de emojis
+  const [urlSeleccionada, setUrlSeleccionada] = useState('https://emojihub.yurace.pro/api/all');  // URL base por defecto
 
+  // Llamada a la API para obtener los emojis basados en la URL seleccionada
   useEffect(() => {
-    fetch("https://emojihub.yurace.pro/api/all")
-      .then(response => response.json())
-      .then(data => setEmojis(data))
-      .catch(error => console.error("Error al cargar emojis:", error));
-  }, []);
+    const obtenerDatos = async () => {
+      const res = await fetch(urlSeleccionada);
+      const json = await res.json();
+      setData(json);  // Actualizamos la lista de emojis
+    };
 
-  const mostrarDetalles = (emoji) => {
-    setEmojiSeleccionado(emoji);
+    obtenerDatos();
+  }, [urlSeleccionada]);  // Vuelve a ejecutar la llamada cuando cambia la URL
+
+  // Función que maneja el cambio de URL
+  const handleCategoriaChange = (url) => {
+    setUrlSeleccionada(url);  // Cambiamos la URL para hacer una nueva consulta a la API
   };
 
-  const volverALista = () => {
-    setEmojiSeleccionado(null);
-  };
+  // Filtrar los emojis por nombre si hay una búsqueda
+  let resultados = data;
 
-  const filtered = emojis.filter(emoji =>
-    emoji.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  if (emojiSeleccionado) {
-    const codePoint = parseInt(
-      emojiSeleccionado.htmlCode[0].replace('&#', '').replace(';', ''),
-      10
-    );
-    const symbol = String.fromCodePoint(codePoint);
-
-    return (
-      <div style={{ textAlign: "center", padding: "20px" }}>
-        <h2>{emojiSeleccionado.name}</h2>
-        <div style={{ fontSize: "5rem" }}>{symbol}</div>
-        <p><strong>Categoría:</strong> {emojiSeleccionado.category}</p>
-        <p><strong>Grupo:</strong> {emojiSeleccionado.group}</p>
-        <button onClick={volverALista} style={{ marginTop: "20px" }}>Volver a la lista</button>
-      </div>
+  if (busqueda.length >= 3) {
+    resultados = data.filter(emoji =>
+      emoji.name.toLowerCase().includes(busqueda.toLowerCase())
     );
   }
 
   return (
-    <div className="lista-container">
-      <h2>Lista de Emojis</h2>
+    <>
+      {/* Componente de búsqueda */}
       <input
         type="text"
-        placeholder="Buscar emoji..."
-        value={searchTerm}
-        onChange={e => setSearchTerm(e.target.value)}
+        placeholder="Buscar Emoji"
+        value={busqueda}
+        onChange={(e) => setBusqueda(e.target.value)}
+        className="c-buscador"
       />
 
-      <section className="emoji-list">
-        {filtered.map((emoji, index) => {
-          const codePoint = parseInt(
-            emoji.htmlCode[0].replace('&#', '').replace(';', ''),
-            10
-          );
-          const symbol = String.fromCodePoint(codePoint);
+      {/* Componente Filtro para seleccionar categorías */}
+      <Filtro onTipoChange={handleCategoriaChange} />
 
-          return (
-            <div key={index} className="emoji-card" style={{ cursor: 'pointer' }} onClick={() => mostrarDetalles(emoji)}>
-              <span style={{ fontSize: "2rem" }}>{symbol}</span>
-              <p>{emoji.name}</p>
-              <button>Ver detalles</button>
+      {/* Sección que muestra los emojis filtrados */}
+      <section className='c-lista'>
+        {resultados.length > 0 ? (
+          resultados.map((emoji, index) => (
+            <div
+              className='c-lista-emoji'
+              key={index}
+              onClick={() => navigate(`/emoji/${emoji.name}`)}  // Redirigir al detalle del emoji
+            >
+              <p className="emoji-character">{emoji.character}</p>  {/* Mostramos el emoji */}
+              <p className="emoji-name">{emoji.name}</p>  {/* Mostramos el nombre del emoji */}
             </div>
-          );
-        })}
+          ))
+        ) : (
+          <p>No se encontraron emojis para esta búsqueda o categoría.</p>
+        )}
       </section>
-    </div>
+    </>
   );
 }
 

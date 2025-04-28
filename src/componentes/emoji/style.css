@@ -1,0 +1,35 @@
+.app-contenedor {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    position: relative;
+    padding-bottom: 60px;
+  }
+  
+  .c-filtro {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 10px;
+  }
+  
+  .c-filtro-boton {
+    padding: 10px 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  }
+  
+  .emoji-list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .emoji-item {
+    margin: 10px;
+    font-size: 2rem;
+  }
+  
+  .emoji-detalle {
+    padding: 20px;
+  }
+  
