@@ -1,44 +1,76 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const EmojiList = () => {
-  const [emojis, setEmojis] = useState([]); // Estado para almacenar los emojis
-  const [loading, setLoading] = useState(true); // Estado para controlar la carga
-  const [error, setError] = useState(null); // Estado para manejar errores
+function Lista() {
+  const [emojis, setEmojis] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [emojiSeleccionado, setEmojiSeleccionado] = useState(null);
 
   useEffect(() => {
-    // Función para obtener los emojis de la API
-    const fetchEmojis = async () => {
-      try {
-        const res = await fetch('https://emojihub.yurace.pro/api/all');
-        const data = await res.json();
-        setEmojis(data); // Guardamos los emojis en el estado
-        setLoading(false); // Cambiamos el estado de carga a falso
-      } catch (err) {
-        console.error('Error al cargar los emojis:', err);
-        setError('Error al cargar los emojis'); // Mostramos el error en caso de fallo
-        setLoading(false); // También cambiamos el estado de carga a falso
-      }
-    };
+    fetch("https://emojihub.yurace.pro/api/all")
+      .then(response => response.json())
+      .then(data => setEmojis(data))
+      .catch(error => console.error("Error al cargar emojis:", error));
+  }, []);
 
-    fetchEmojis(); // Llamamos la función para obtener los emojis
-  }, []); // El array vacío asegura que esto solo se ejecute una vez cuando el componente se monte
+  const mostrarDetalles = (emoji) => {
+    setEmojiSeleccionado(emoji);
+  };
 
-  if (loading) return <p>Cargando emojis...</p>; // Muestra un mensaje de carga
-  if (error) return <p>{error}</p>; // Muestra un mensaje de error si hay un problema
+  const volverALista = () => {
+    setEmojiSeleccionado(null);
+  };
+
+  const filtered = emojis.filter(emoji =>
+    emoji.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  if (emojiSeleccionado) {
+    const codePoint = parseInt(
+      emojiSeleccionado.htmlCode[0].replace('&#', '').replace(';', ''),
+      10
+    );
+    const symbol = String.fromCodePoint(codePoint);
+
+    return (
+      <div style={{ textAlign: "center", padding: "20px" }}>
+        <h2>{emojiSeleccionado.name}</h2>
+        <div style={{ fontSize: "5rem" }}>{symbol}</div>
+        <p><strong>Categoría:</strong> {emojiSeleccionado.category}</p>
+        <p><strong>Grupo:</strong> {emojiSeleccionado.group}</p>
+        <button onClick={volverALista} style={{ marginTop: "20px" }}>Volver a la lista</button>
+      </div>
+    );
+  }
 
   return (
-    <div>
-      <h1>Lista de Emojis</h1>
-      <ul>
-        {emojis.map((emoji, index) => (
-          <li key={index}>
-            <span>{emoji.emoji}</span> {/* Aquí mostramos el emoji real */}
-            - {emoji.name} {/* Muestra la categoría del emoji */}
-          </li>
-        ))}
-      </ul>
+    <div className="lista-container">
+      <h2>Lista de Emojis</h2>
+      <input
+        type="text"
+        placeholder="Buscar emoji..."
+        value={searchTerm}
+        onChange={e => setSearchTerm(e.target.value)}
+      />
+
+      <section className="emoji-list">
+        {filtered.map((emoji, index) => {
+          const codePoint = parseInt(
+            emoji.htmlCode[0].replace('&#', '').replace(';', ''),
+            10
+          );
+          const symbol = String.fromCodePoint(codePoint);
+
+          return (
+            <div key={index} className="emoji-card" style={{ cursor: 'pointer' }} onClick={() => mostrarDetalles(emoji)}>
+              <span style={{ fontSize: "2rem" }}>{symbol}</span>
+              <p>{emoji.name}</p>
+              <button>Ver detalles</button>
+            </div>
+          );
+        })}
+      </section>
     </div>
   );
-};
+}
 
-export default EmojiList;
+export default Lista;

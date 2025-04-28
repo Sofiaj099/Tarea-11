@@ -1,15 +1,30 @@
-function Filtro({ onTipoChange }) {
-    const tipos = [    ];
-  
-    return (
-      <div className="c-filtro">
-        {tipos.map((unTipo, index) => (
-          <button className='' key={index} onClick={() => onTipoChange(unTipo)}>
-            {unTipo}
-          </button>
-        ))}
-      </div>
-    );
-  }
-  
-  export default Filtro;
+function Filtro({ onCategoriaChange }) {
+  const categorias = [
+    "All",
+    "Smileys & Emotion",
+    "Animals & Nature",
+    "Food & Drink",
+    "Travel & Places",
+    "Activities",
+    "Objects",
+    "Symbols",
+    "Flags"
+  ];
+
+  return (
+    <div className="c-filtro">
+      {categorias.map((unaCategoria, index) => (
+        <button
+          key={index}
+          className="c-filtro-boton"
+          onClick={() => onCategoriaChange(unaCategoria)}
+        >
+          {unaCategoria}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+export default Filtro;
+

@@ -1,0 +1,21 @@
+.app-contenedor {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    position: relative;
+    padding-bottom: 60px; /* espacio para el menú */
+  }
+  
+  .c-menu {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f1f1f1;
+    border-top: 1px solid #000000;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-around;
+    z-index: 1000;
+  }
+  
