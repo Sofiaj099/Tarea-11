@@ -1,35 +1,53 @@
-.app-contenedor {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    position: relative;
-    padding-bottom: 60px;
-  }
-  
-  .c-filtro {
-    display: flex;
-    justify-content: space-evenly;
-    padding: 10px;
-  }
-  
-  .c-filtro-boton {
-    padding: 10px 20px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    cursor: pointer;
-  }
-  
-  .emoji-list {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  
-  .emoji-item {
-    margin: 10px;
-    font-size: 2rem;
-  }
-  
-  .emoji-detalle {
-    padding: 20px;
-  }
-  
+/* componentes/emoji/style.css */
+
+.emoji-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background-color: #fafafa;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 300px;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+.emoji-character {
+  font-size: 4rem; /* tamaño reducido */
+  margin-bottom: 1rem;
+}
+
+.emoji-name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  text-transform: capitalize;
+}
+
+.emoji-category {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.emoji-button {
+  font-size: 1.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #fff;
+  border: 2px solid #e74c3c;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.emoji-button:hover {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+.emoji-button.favorito {
+  background-color: #e74c3c;
+  color: #fff;
+}

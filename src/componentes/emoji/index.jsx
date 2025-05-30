@@ -6,10 +6,7 @@ import { useFavoritos } from '../contexto/FavoritosContext';
 function Emoji() {
   const { name } = useParams();
   const [dataEmoji, setDataEmoji] = useState(null);
-
   const { favoritos, agregarFavorito, eliminarFavorito } = useFavoritos();
-
-  const esFavorito = favoritos.some(e => e.name === dataEmoji?.name);
 
   useEffect(() => {
     fetch(`https://emojihub.yurace.pro/api/all`)
@@ -21,13 +18,19 @@ function Emoji() {
       .catch(error => console.error("Error:", error));
   }, [name]);
 
+  const esFavorito = favoritos.some(e => e.name === dataEmoji?.name);
+
   const toggleFavorito = () => {
     if (!dataEmoji) return;
 
     if (esFavorito) {
       eliminarFavorito(dataEmoji.name);
     } else {
-      agregarFavorito({ name: dataEmoji.name, character: dataEmoji.character, category: dataEmoji.category });
+      agregarFavorito({
+        name: dataEmoji.name,
+        character: dataEmoji.character,
+        category: dataEmoji.category
+      });
     }
   };
 
@@ -37,10 +40,11 @@ function Emoji() {
 
   return (
     <div>
-      <p style={{ fontSize: '4rem' }}>{dataEmoji.character}</p>
-      <p>{dataEmoji.name}</p>
-      <p>Categoria: {dataEmoji.category}</p>
-
+      {dataEmoji.character && (
+        <p style={{ fontSize: '4rem' }}>{dataEmoji.character}</p>
+      )}
+      <h2>{dataEmoji.name}</h2>
+      <p>Categoría: {dataEmoji.category}</p>
       <button onClick={toggleFavorito} style={{ fontSize: '1.5rem' }}>
         {esFavorito ? '❤️' : '🤍'}
       </button>
@@ -49,3 +53,4 @@ function Emoji() {
 }
 
 export default Emoji;
+
