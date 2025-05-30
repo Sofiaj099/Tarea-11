@@ -1,3 +1,4 @@
+// src/componentes/filtro/Filtro.jsx
 import React from 'react';
 
 function Filtro({ onTipoChange }) {
@@ -18,7 +19,7 @@ function Filtro({ onTipoChange }) {
         <button
           key={index}
           className="c-filtro-boton"
-          onClick={() => onTipoChange(categoria.url)}  // Redirigir según la URL de la categoría
+          onClick={() => onTipoChange(categoria.url)}
           aria-label={`Mostrar emojis de ${categoria.name}`}
         >
           {categoria.name}
@@ -29,3 +30,4 @@ function Filtro({ onTipoChange }) {
 }
 
 export default Filtro;
+
