@@ -7,13 +7,14 @@ import Favoritos from './componentes/favoritos';
 import Aleatorio from './componentes/aleatorios';
 import Capturado from './componentes/capturados';
 import Usuarios from './componentes/usuarios';
-import Emoji from './componentes/emoji';  // Cambié de Pokemon a Emoji
+import Emoji from './componentes/emoji';  
 import Aleatorios from './componentes/aleatorios';
 import Capturados from './componentes/capturados';
 import Menu from './componentes/Menu';
+import Login from './componentes/login/login';
+
 
 function App() {
-
   return (
     <Router>
       <Menu />
@@ -23,10 +24,13 @@ function App() {
         <Route path="/Aleatorios" element={<Aleatorios />} />
         <Route path="/Capturados" element={<Capturados />} />
         <Route path="/Usuarios" element={<Usuarios />} />
-        <Route path="/Emoji/:name" element={<Emoji />} />  
+        <Route path="/Emoji/:name" element={<Emoji />} /> 
+        <Route path="/login" element={<Login />} />
+ 
       </Routes>
     </Router>
   );
 }
 
 export default App;
+

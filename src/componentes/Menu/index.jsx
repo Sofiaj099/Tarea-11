@@ -9,8 +9,9 @@ function Menu() {
           <Link to="/aleatorios">Aleatorio</Link>
           <Link to="/usuarios">Usuarios</Link>
           <Link to="/favoritos">Favoritos</Link>
+          <Link to="/login">Login</Link>
         </nav>
     )
-  }
-  
-  export default Menu
+}
+
+export default Menu;
